@@ -43,3 +43,4 @@ Commit for day 13: update and re-initial commit on 2024-11-09T12:54:41
 Commit for day 14: update and re-initial commit on 2024-11-08T12:54:45
 Commit for day 15: update and re-initial commit on 2024-11-07T12:54:50
 Commit for day 16: update and re-initial commit on 2024-11-06T12:54:54
+Commit for day 17: update and re-initial commit on 2024-11-05T12:54:59
