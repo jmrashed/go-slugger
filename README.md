@@ -2,6 +2,12 @@
 
 `go-slugger` is a simple yet powerful Go package for generating slugs from strings. It handles various languages, special characters, and customizable delimiters, making it perfect for generating clean, SEO-friendly URLs and slugs for any project.
 
+## Project Stats
+![Forks](https://img.shields.io/github/forks/jmrashed/go-slugger?style=social)
+![Issues](https://img.shields.io/github/issues/jmrashed/go-slugger)
+![Releases](https://img.shields.io/github/downloads/jmrashed/go-slugger/latest/total)
+
+
 ## Features
 
 - Convert strings to slugs in multiple languages.
