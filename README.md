@@ -1,4 +1,4 @@
-<img src="go-slugger.webp>
+<img src="go-slugger.webp">
 
 # go-slugger
 
