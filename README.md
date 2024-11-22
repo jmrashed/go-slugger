@@ -8,8 +8,8 @@
                                      __/ |  __/ |            
                                     |___/  |___/       
 
-```
 GoSlugger version v1.0.1 2024-11-22
+```
 
 # go-slugger
 
