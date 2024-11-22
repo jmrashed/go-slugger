@@ -1,0 +1,39 @@
+# Go binary files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go workspace file
+go.work
+
+# Dependency directories
+vendor/
+
+# Go test binary
+testoutput/
+
+# Go module cache
+/go/pkg/
+
+# Build output directories
+/build/
+bin/
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# Go coverage reports
+*.out
+*.coverprofile
+
+# Log files
+*.log
+
+# Other
+.DS_Store
