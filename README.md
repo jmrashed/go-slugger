@@ -1,24 +1,23 @@
 # go-slugger
 
-`go-slugger` is a simple yet powerful Go package for generating slugs from strings. It handles various languages, special characters, and customizable delimiters, making it perfect for generating clean, SEO-friendly URLs and slugs for any project.
+`go-slugger` is a Go package for generating slugs from strings. It supports multiple languages, custom delimiters, diacritic removal, and more. This package is useful for generating clean, SEO-friendly slugs for URLs, making it easy to integrate with your web applications, CMS, or any system that needs slug generation.
 
-## Project Stats
-![Forks](https://img.shields.io/github/forks/jmrashed/go-slugger?style=social)
-![Issues](https://img.shields.io/github/issues/jmrashed/go-slugger)
-![Releases](https://img.shields.io/github/downloads/jmrashed/go-slugger/latest/total)
-
+[![Forks](https://img.shields.io/github/forks/jmrashed/go-slugger?style=social)](https://github.com/jmrashed/go-slugger/forks)
+[![Issues](https://img.shields.io/github/issues/jmrashed/go-slugger)](https://github.com/jmrashed/go-slugger/issues)
+[![Releases](https://img.shields.io/github/downloads/jmrashed/go-slugger/latest/total)](https://github.com/jmrashed/go-slugger/releases)
+![License](https://img.shields.io/github/license/jmrashed/go-slugger)
 
 ## Features
 
-- Convert strings to slugs in multiple languages.
-- Customizable delimiters (default is `-`).
-- Option to remove diacritics (accents).
-- Handles special characters and unwanted symbols.
-- Easy to integrate with any Go project.
+- **Multi-language Support**: Generates slugs for strings in multiple languages, converting accented characters (e.g., `é`, `ö`) to their nearest ASCII equivalents.
+- **Custom Delimiters**: Allows you to specify a custom delimiter (default is `-`) for separating words in the slug.
+- **Diacritic Removal**: Automatically removes diacritical marks (accents) from characters.
+- **Truncation**: Optionally truncate slugs to a specified length.
+- **Case Sensitivity**: Control over whether the generated slug is lowercase.
 
 ## Installation
 
-To install `go-slugger`, use Go modules to include it in your project:
+To install `go-slugger`, use the Go Modules feature to fetch the package:
 
 ```bash
 go get github.com/jmrashed/go-slugger
@@ -26,142 +25,123 @@ go get github.com/jmrashed/go-slugger
 
 ## Usage
 
-Once installed, you can use `go-slugger` to generate slugs easily.
+### Basic Usage
 
-### Basic Example
-
-```go
-package main
-
-import (
-	"fmt"
-	"github.com/jmrashed/go-slugger"
-)
-
-func main() {
-	// Create a new Slugger instance with default settings
-	slugger := slugger.NewSlugger("-", true)
-
-	// Generate a slug
-	slug := slugger.Slugify("Hello World! This is a test.")
-	fmt.Println(slug) // Output: hello-world-this-is-a-test
-}
-```
-
-### Custom Delimiters and Diacritic Removal
-
-You can customize the delimiter and choose whether to remove diacritical marks (accents).
+To start using `go-slugger`, import the package into your Go file and use the `GenerateSlug` function.
 
 ```go
 package main
 
 import (
-	"fmt"
-	"github.com/jmrashed/go-slugger"
+    "fmt"
+    "github.com/jmrashed/go-slugger"
 )
 
 func main() {
-	// Create a Slugger instance with custom delimiter and remove diacritics
-	slugger := slugger.NewSlugger("_", false)
-
-	// Generate a slug
-	slug := slugger.Slugify("Café au lait")
-	fmt.Println(slug) // Output: café_au_lait
+    input := "Hello World! Welcome to Go."
+    slug := slugger.GenerateSlug(input)
+    fmt.Println(slug) // Output: hello-world-welcome-to-go
 }
 ```
 
-### Example of Custom Delimiters with Special Characters
+### Custom Delimiters
+
+You can specify a custom delimiter (default is `-`) to separate words in the slug.
+
+```go
+slug := slugger.GenerateSlug("Hello World!", "_")
+fmt.Println(slug) // Output: hello_world
+```
+
+### Diacritic Removal
+
+The package automatically removes diacritical marks (accents) for characters like `é`, `ö`, etc.
+
+```go
+slug := slugger.GenerateSlug("Café de Paris")
+fmt.Println(slug) // Output: cafe-de-paris
+```
+
+### Case Sensitivity
+
+The default behavior is to generate slugs in lowercase. If you want to preserve the original case, you can pass a `false` flag for the `lowercase` parameter.
+
+```go
+slug := slugger.GenerateSlug("Hello World!", "-", false)
+fmt.Println(slug) // Output: Hello-World
+```
+
+### Truncating Slugs
+
+You can specify the maximum length of the generated slug. If the length exceeds this, it will be truncated.
+
+```go
+slug := slugger.GenerateSlug("This is a very long title", "-", true, 20)
+fmt.Println(slug) // Output: this-is-a-very-lo
+```
+
+## API Reference
+
+### `GenerateSlug(input string, delimiter string, lowercase bool, maxLength int) string`
+
+- `input` (string): The string to convert into a slug.
+- `delimiter` (string, optional): The delimiter used in the slug. Default is `-`.
+- `lowercase` (bool, optional): Whether to generate the slug in lowercase (default: `true`).
+- `maxLength` (int, optional): Maximum length of the slug. The slug will be truncated if it exceeds this length.
+
+Returns the generated slug as a string.
+
+## Example
+
+### Full Example
 
 ```go
 package main
 
 import (
-	"fmt"
-	"github.com/jmrashed/go-slugger"
+    "fmt"
+    "github.com/jmrashed/go-slugger"
 )
 
 func main() {
-	// Use custom delimiter and remove unwanted characters
-	slugger := slugger.NewSlugger("_", true)
-
-	// Generate a slug
-	slug := slugger.Slugify("My--Custom--Slugger!2024")
-	fmt.Println(slug) // Output: my_custom_slugger_2024
+    input := "München ist schön!"
+    
+    // Generate slug with default settings
+    slug1 := slugger.GenerateSlug(input)
+    fmt.Println(slug1) // Output: muenchen-ist-schoen
+    
+    // Generate slug with custom delimiter and case preservation
+    slug2 := slugger.GenerateSlug(input, "_", false)
+    fmt.Println(slug2) // Output: Muenchen_ist_schoen
+    
+    // Generate slug with truncation and custom length
+    slug3 := slugger.GenerateSlug(input, "-", true, 15)
+    fmt.Println(slug3) // Output: muenchen-ist-s
 }
 ```
 
-## API
+## Contribution
 
-### `func NewSlugger(delimiter string, removeDiacritics bool) *Slugger`
+We welcome contributions to `go-slugger`! If you’d like to contribute, please follow the steps below:
 
-Creates a new `Slugger` instance with the specified delimiter and diacritic removal option.
+1. Fork the repository
+2. Clone your fork locally
+3. Create a new branch for your changes
+4. Make your changes and add tests
+5. Open a pull request to the `main` branch
 
-- `delimiter` (string): The delimiter used to replace spaces and non-alphanumeric characters (default is `"-"`).
-- `removeDiacritics` (bool): Whether to remove diacritical marks (accents) from characters (default is `true`).
-
-### `func (s *Slugger) Slugify(input string) string`
-
-Converts the input string to a slug, based on the options set when creating the `Slugger`.
-
-- **Returns**: The generated slug as a string.
-
-## Testing
-
-You can run the tests for the package using:
-
-```bash
-go test
-```
-
-We use the [Testify](https://github.com/stretchr/testify) testing framework for assertion-based testing. Ensure you have all dependencies installed by running:
-
-```bash
-go get github.com/stretchr/testify
-```
-
-### Example Tests
-
-```go
-package slugger
-
-import (
-	"testing"
-	"github.com/stretchr/testify/assert"
-)
-
-func TestSlugger(t *testing.T) {
-	// Test case 1: Basic Slugify with default settings
-	slugger := NewSlugger("-", true)
-	result := slugger.Slugify("Hello World! This is a test.")
-	expected := "hello-world-this-is-a-test"
-	assert.Equal(t, expected, result)
-
-	// Test case 2: Slugify without diacritic removal
-	slugger = NewSlugger("-", false)
-	result = slugger.Slugify("Café au lait")
-	expected = "café-au-lait"
-	assert.Equal(t, expected, result)
-
-	// Test case 3: Slugify with custom delimiter
-	slugger = NewSlugger("_", true)
-	result = slugger.Slugify("Hello World! This is a test.")
-	expected = "hello_world_this_is_a_test"
-	assert.Equal(t, expected, result)
-}
-```
-
-## Contributing
-
-We welcome contributions! If you have a feature request or found a bug, feel free to open an issue or submit a pull request.
-
-### Steps for contributing:
-
-1. Fork this repository.
-2. Clone your fork to your local machine.
-3. Create a new branch for your feature or bugfix.
-4. Make your changes and test them.
-5. Submit a pull request with a clear description of the changes you made.
+For more details, refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+For a detailed list of changes, refer to the [CHANGELOG.md](CHANGELOG.md).
+
+## Support
+
+If you have any questions or need support, feel free to open an issue in the [GitHub Issues](https://github.com/jmrashed/go-slugger/issues) section.
+
+For more detailed documentation, visit the [documentation folder](docs/). 
