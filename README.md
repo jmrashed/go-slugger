@@ -1,3 +1,5 @@
+<img src="go-slugger.webp>
+
 # go-slugger
 
 `go-slugger` is a Go package for generating slugs from strings. It supports multiple languages, custom delimiters, diacritic removal, and more. This package is useful for generating clean, SEO-friendly slugs for URLs, making it easy to integrate with your web applications, CMS, or any system that needs slug generation.
