@@ -15,7 +15,7 @@ type Slugger struct {
 }
 
 // NewSlugger creates a new instance of the Slugger.
-func NewSlugger(delimiter string, removeDiacritics bool) *Slugger {
+func GenerateSlug(delimiter string, removeDiacritics bool) *Slugger {
 	return &Slugger{
 		Delimiter:        delimiter,
 		RemoveDiacritics: removeDiacritics,
