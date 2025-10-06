@@ -37,3 +37,6 @@ bin/
 
 # Other
 .DS_Store
+pre-push-and-release-checklist.md
+*.ps1
+push-and-release-instruction.md
